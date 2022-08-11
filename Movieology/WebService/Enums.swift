@@ -16,7 +16,11 @@ enum urlType {
 
 }
 
-enum webServiceErrors: CustomStringConvertible {
+protocol customErrors {
+    var description: String {get}
+}
+
+enum webServiceErrors: customErrors {
     case internetError
     case apiError
     case urlError
@@ -34,5 +38,4 @@ enum webServiceErrors: CustomStringConvertible {
             return "An unknown error occured. Please try again later"
         }
     }
-
 }
