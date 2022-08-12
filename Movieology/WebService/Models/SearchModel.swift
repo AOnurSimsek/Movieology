@@ -36,7 +36,8 @@ struct SearchResult: Codable {
     var title: String?
     var overview: String?
     var mediaType: String?
-    var posterPath, profilePath: String?
+    var posterPath: String?
+    var profilePath: String?
 
     enum CodingKeys: String, CodingKey {
         case id

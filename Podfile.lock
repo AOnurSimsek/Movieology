@@ -3,12 +3,14 @@ PODS:
   - IQKeyboardManagerSwift (6.5.6)
   - Kingfisher (6.3.1)
   - lottie-ios (3.4.1)
+  - SnapKit (5.6.0)
 
 DEPENDENCIES:
   - Alamofire
   - IQKeyboardManagerSwift
   - Kingfisher
   - lottie-ios
+  - SnapKit
 
 SPEC REPOS:
   trunk:
@@ -16,13 +18,15 @@ SPEC REPOS:
     - IQKeyboardManagerSwift
     - Kingfisher
     - lottie-ios
+    - SnapKit
 
 SPEC CHECKSUMS:
   Alamofire: e447a2774a40c996748296fa2c55112fdbbc42f9
   IQKeyboardManagerSwift: c7df9d2deb356c04522f5c4b7b6e4ce4d8ed94fe
   Kingfisher: 016c8b653a35add51dd34a3aba36b580041acc74
   lottie-ios: 016449b5d8be0c3dcbcfa0a9988469999cd04c5d
+  SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
 
-PODFILE CHECKSUM: e7f91f43b43296e8f842f07b0be3b8d250d3edc2
+PODFILE CHECKSUM: 9d8978323d5b392192fcfede22835857bdff11e2
 
 COCOAPODS: 1.11.3

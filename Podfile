@@ -10,6 +10,7 @@ target 'Movieology' do
 	pod 'lottie-ios'
 	pod 'Alamofire'
 	pod 'IQKeyboardManagerSwift'
+        pod 'SnapKit'
 
   target 'MovieologyTests' do
     inherit! :search_paths

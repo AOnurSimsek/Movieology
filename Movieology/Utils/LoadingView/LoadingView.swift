@@ -86,10 +86,12 @@ class LoadingView: UIView {
     }
     
     public func stopLoadingView(){
-        animationView.stop()
-        isLoadingViewShowing=false
-        self.removeFromSuperview()
-        LoadingView.resetLoadingView()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.animationView.stop()
+            self.isLoadingViewShowing=false
+            self.removeFromSuperview()
+            LoadingView.resetLoadingView()
+        }
     }
     
     public func stopLoadingView(vc: UIViewController) {

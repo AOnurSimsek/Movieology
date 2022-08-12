@@ -44,9 +44,10 @@ final class WebService {
                              actorID: Int? = nil,
                              page: Int? = 1,
                              searchText: String? = "",
-                             handler: @escaping (S?,webServiceErrors?) -> Void) {
+                             successHandler: @escaping ((S)->Void),
+                             errorHandler: @escaping ((webServiceErrors)->Void)) {
         if !isReachable() {
-            handler(nil,.internetError)
+            errorHandler(.internetError)
             return
         }
 
@@ -56,19 +57,19 @@ final class WebService {
                                page: page,
                                searchText: searchText)
         else {
-            handler(nil,.urlError)
+            errorHandler(.urlError)
             return
         }
 
         AF.request(url, method: .get).responseDecodable(of: S.self) { response in
             if let error = response.error {
                 print("🛑 error occured at get request. Error :" + error.localizedDescription)
-                handler(nil, .unknown)
+                errorHandler(.apiError)
             } else {
                 if let value = response.value {
-                    handler(value, nil)
+                    successHandler(value)
                 } else {
-                    handler(nil, .unknown)
+                    errorHandler(.unknown)
                 }
             }
         }
