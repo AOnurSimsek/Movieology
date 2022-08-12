@@ -8,11 +8,11 @@
 import UIKit
 import Kingfisher
 
-class MainScreenTableViewCell: UITableViewCell {
+class MovieTableViewCell: UITableViewCell {
 
-    static let identifier: String = "MainScreenTableViewCellIdentifier"
-    static let nibNabme: String = "MainScreenTableViewCell"
-    static let cellHeight: Int = 140
+    static let identifier: String = "MovieTableViewCellIdentifier"
+    static let nibNabme: String = "MovieTableViewCell"
+    static let cellHeight: CGFloat = 140
 
     @IBOutlet weak var movieImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!

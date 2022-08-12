@@ -38,11 +38,9 @@ final class MainScreenViewController: BaseViewController<MainScreenViewModel> {
             self.showLoading()
             switch stateValue {
             case .popularMovies:
-                print("state populare girdim")
                 self.titleLabel.text = "Popular Movies"
                 self.viewModel.getPopularMovies()
             case .nextPage:
-                print("state next page girdim")
                 self.viewModel.getPopularMovies(isNextPage: true)
             case .search:
                 self.titleLabel.text = "Search Results"
@@ -74,6 +72,11 @@ final class MainScreenViewController: BaseViewController<MainScreenViewModel> {
             }
         }
 
+        viewModel.searchResults.bind { [weak self] _ in
+            self?.removeLoading()
+            self?.tableView.reloadData()
+        }
+
     }
 
 }
@@ -83,6 +86,7 @@ extension MainScreenViewController {
         self.view.backgroundColor = UIColor(hexString: "071037")
         searchTextField.backgroundColor = UIColor(hexString: "2E3656")
         searchTextField.setSearchBar()
+        searchTextField.delegate = self
 
         titleLabel.font = UIFont(name: "Roboto-Medium", size: 22)
         titleLabel.textColor = .white
@@ -125,17 +129,19 @@ extension MainScreenViewController: UITableViewDelegate, UITableViewDataSource {
         tableView.tableFooterView = UIView()
         tableView.estimatedRowHeight = 120
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
-        tableView.register(UINib(nibName: MainScreenTableViewCell.nibNabme, bundle: nil),
-                           forCellReuseIdentifier: MainScreenTableViewCell.identifier)
+        tableView.register(UINib(nibName: MovieTableViewCell.nibNabme, bundle: nil),
+                           forCellReuseIdentifier: MovieTableViewCell.identifier)
+        tableView.register(UINib(nibName: ActorTableViewCell.nibNabme, bundle: nil),
+                           forCellReuseIdentifier: ActorTableViewCell.identifier)
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.getRowCount(screenState: screenState.value)
+        return viewModel.getRowCount(screenState: screenState.value, section: section)
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return viewModel.getSectionCount(screenState: screenState.value)
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -146,9 +152,24 @@ extension MainScreenViewController: UITableViewDelegate, UITableViewDataSource {
 
     }
 
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if screenState.value == .search {
+            return viewModel.getSectionHeader(section: section)
+        } else {
+            return nil
+        }
+    }
+
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if screenState.value == .search {
+            return 50
+        } else {
+            return 0
+        }
+    }
+
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if (screenState.value == .nextPage || screenState.value == .popularMovies) && indexPath.row == viewModel.popularMovies.value.count-1 {
-            print("willdisplaye girdim")
             screenState.value = .nextPage
         }
     }
@@ -156,9 +177,9 @@ extension MainScreenViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch screenState.value {
         case .popularMovies:
-            return 140
+            return MovieTableViewCell.cellHeight
         case .nextPage:
-            return 140
+            return MovieTableViewCell.cellHeight
         case .search:
             return UITableView.automaticDimension
         }
@@ -169,5 +190,10 @@ extension MainScreenViewController: UITableViewDelegate, UITableViewDataSource {
 //MARK: - TextFieldDelegates
 extension MainScreenViewController: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
+        if let text = textField.text, text.count > 1 {
+            screenState.value = .search
+        } else {
+            screenState.value = .popularMovies
+        }
     }
 }

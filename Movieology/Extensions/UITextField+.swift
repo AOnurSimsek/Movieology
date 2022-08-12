@@ -22,7 +22,7 @@ extension UITextField {
         setRightView()
     }
 
-    func setLeftView() {
+   private func setLeftView() {
 
         let searchView: UIView = {
             let tempView = UIView()
@@ -37,7 +37,7 @@ extension UITextField {
         self.leftViewMode = .always
     }
 
-    func setRightView() {
+    private func setRightView() {
         self.clearButtonMode = .whileEditing
     }
 }
