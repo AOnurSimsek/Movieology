@@ -30,8 +30,9 @@ class ActorTableViewCell: UITableViewCell {
 
     func setCell(image: URL?,
                  fullName: String) {
-        print(image)
-        actorImageView.kf.setImage(with: image)
+        if image != URL(string: "https://image.tmdb.org/t/p/w500") {
+            actorImageView.kf.setImage(with: image)
+        }
         actorNameLabel.text = fullName
     }
 

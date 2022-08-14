@@ -18,8 +18,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         IQKeyboardManager.shared.enable = true
         IQKeyboardManager.shared.toolbarDoneBarButtonItemText = "Search"
 
+
         window = UIWindow()
-        window?.rootViewController =  MainScreenViewController()
+        window?.rootViewController = UINavigationController(rootViewController: MainScreenViewController())
         window?.makeKeyAndVisible()
         return true
     }

@@ -18,8 +18,8 @@ struct MovieDetailModel: Codable {
     var overview: String?
     var posterPath: String?
     var status: String?
-    var id: String?
-    var voteCount: String?
+    var id: Int?
+    var voteCount: Int?
     var runtime: Int?
     var voteAverage: Double?
     var success: Bool?

@@ -19,7 +19,10 @@ class MainScreenViewModel: BaseViewModel {
     func getPopularMovies(isNextPage: Bool = false) {
         if isNextPage && currentPage <= maxPage {
             currentPage += 1
-            WebService.shared.request(type: .popularMovies, page: currentPage, successHandler: handlePopularMovies(_:), errorHandler: handleError(_:))
+            WebService.shared.request(type: .popularMovies,
+                                      page: currentPage,
+                                      successHandler: handlePopularMovies(_:),
+                                      errorHandler: handleError(_:))
         } else {
             currentPage = 1
             WebService.shared.request(type: .popularMovies,
@@ -29,7 +32,10 @@ class MainScreenViewModel: BaseViewModel {
     }
 
     func search(text: String) {
-        WebService.shared.request(type: .search, searchText: text, successHandler: handleSearch(_:), errorHandler: handleError(_:))
+        WebService.shared.request(type: .search,
+                                  searchText: text,
+                                  successHandler: handleSearch(_:),
+                                  errorHandler: handleError(_:))
     }
 
     private func handlePopularMovies(_ response: PopularMoviesModel) {
@@ -90,14 +96,16 @@ class MainScreenViewModel: BaseViewModel {
     func getCell(tableView: UITableView, indexPath: IndexPath, screenState: MainScreenState) -> UITableViewCell {
         switch screenState {
         case .popularMovies:
-            let cell = tableView.dequeueReusableCell(withIdentifier: MovieTableViewCell.identifier, for: indexPath) as! MovieTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: MovieTableViewCell.identifier,
+                                                     for: indexPath) as! MovieTableViewCell
             cell.setCell(image: URL(string: "https://image.tmdb.org/t/p/w500" + (popularMovies.value[indexPath.row].posterPath ?? "")),
                          title: popularMovies.value[indexPath.row].originalTitle ?? "",
                          description: popularMovies.value[indexPath.row].overview ?? "")
             cell.selectionStyle = .none
             return cell
         case .nextPage:
-            let cell = tableView.dequeueReusableCell(withIdentifier: MovieTableViewCell.identifier, for: indexPath) as! MovieTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: MovieTableViewCell.identifier,
+                                                     for: indexPath) as! MovieTableViewCell
             cell.setCell(image: URL(string: "https://image.tmdb.org/t/p/w500" + (popularMovies.value[indexPath.row].posterPath ?? "")),
                          title: popularMovies.value[indexPath.row].originalTitle ?? "",
                          description: popularMovies.value[indexPath.row].overview ?? "Description not found")
@@ -105,13 +113,15 @@ class MainScreenViewModel: BaseViewModel {
             return cell
         case .search:
             if indexPath.section == 0 || indexPath.section == 1 {
-                let cell = tableView.dequeueReusableCell(withIdentifier: MovieTableViewCell.identifier, for: indexPath) as! MovieTableViewCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: MovieTableViewCell.identifier,
+                                                         for: indexPath) as! MovieTableViewCell
                 cell.setCell(image: URL(string: "https://image.tmdb.org/t/p/w500" + (searchResults.value[indexPath.section][indexPath.row].posterPath ?? "")),
                              title: searchResults.value[indexPath.section][indexPath.row].name ?? searchResults.value[indexPath.section][indexPath.row].title ?? "",
                              description: searchResults.value[indexPath.section][indexPath.row].overview ?? "")
                 return cell
             } else {
-                let cell = tableView.dequeueReusableCell(withIdentifier: ActorTableViewCell.identifier, for: indexPath) as! ActorTableViewCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: ActorTableViewCell.identifier,
+                                                         for: indexPath) as! ActorTableViewCell
                 cell.setCell(image: URL(string: "https://image.tmdb.org/t/p/w500" + (searchResults.value[indexPath.section][indexPath.row].profilePath ?? "")),
                              fullName: searchResults.value[indexPath.section][indexPath.row].name ?? "")
                 cell.selectionStyle = .none
@@ -129,5 +139,9 @@ class MainScreenViewModel: BaseViewModel {
             return TitleHeaderView(title: "Actor, Actress etc.")
         }
     }
-
+    
+    func getMovieID(indexPath: IndexPath) -> Int? {
+        return popularMovies.value[indexPath.row].id
+    }
+    
 }

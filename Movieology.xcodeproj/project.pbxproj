@@ -30,6 +30,9 @@
 		2831895428A59C8000A43419 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2831895328A59C8000A43419 /* BaseViewController.swift */; };
 		2831895628A5AB4400A43419 /* MainScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2831895528A5AB4400A43419 /* MainScreenViewController.swift */; };
 		2831895828A5AB6900A43419 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2831895728A5AB6900A43419 /* MainViewModel.swift */; };
+		2834B2C128A926BB00C7CB56 /* CastCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2834B2BF28A926BB00C7CB56 /* CastCollectionViewCell.swift */; };
+		2834B2C228A926BB00C7CB56 /* CastCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2834B2C028A926BB00C7CB56 /* CastCollectionViewCell.xib */; };
+		2834B2C428A944E900C7CB56 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2834B2C328A944E900C7CB56 /* String+.swift */; };
 		285A3BB228A6644E000CB700 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285A3BB128A6644E000CB700 /* Observable.swift */; };
 		285A3BB428A67C22000CB700 /* UITextField+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285A3BB328A67C22000CB700 /* UITextField+.swift */; };
 		285A3BBC28A67DCC000CB700 /* Roboto-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 285A3BB628A67DCC000CB700 /* Roboto-Black.ttf */; };
@@ -97,6 +100,9 @@
 		2831895328A59C8000A43419 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		2831895528A5AB4400A43419 /* MainScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenViewController.swift; sourceTree = "<group>"; };
 		2831895728A5AB6900A43419 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		2834B2BF28A926BB00C7CB56 /* CastCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastCollectionViewCell.swift; sourceTree = "<group>"; };
+		2834B2C028A926BB00C7CB56 /* CastCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CastCollectionViewCell.xib; sourceTree = "<group>"; };
+		2834B2C328A944E900C7CB56 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		285A3BB128A6644E000CB700 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		285A3BB328A67C22000CB700 /* UITextField+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+.swift"; sourceTree = "<group>"; };
 		285A3BB628A67DCC000CB700 /* Roboto-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Black.ttf"; sourceTree = "<group>"; };
@@ -260,6 +266,7 @@
 				285A3BB328A67C22000CB700 /* UITextField+.swift */,
 				285A3BC228A68000000CB700 /* UIColor+.swift */,
 				285A3BC928A688C4000CB700 /* UIView+.swift */,
+				2834B2C328A944E900C7CB56 /* String+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -291,6 +298,7 @@
 			children = (
 				285A3BCB28A69AB2000CB700 /* MovieDetailScreen.swift */,
 				285A3BCD28A69ABE000CB700 /* MovieDetailViewModel.swift */,
+				2834B2BE28A9269700C7CB56 /* CastCollectionViewCell */,
 			);
 			path = MovieDetailScreen;
 			sourceTree = "<group>";
@@ -311,6 +319,15 @@
 				2831895328A59C8000A43419 /* BaseViewController.swift */,
 			);
 			path = Base;
+			sourceTree = "<group>";
+		};
+		2834B2BE28A9269700C7CB56 /* CastCollectionViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				2834B2BF28A926BB00C7CB56 /* CastCollectionViewCell.swift */,
+				2834B2C028A926BB00C7CB56 /* CastCollectionViewCell.xib */,
+			);
+			path = CastCollectionViewCell;
 			sourceTree = "<group>";
 		};
 		285A3BB528A67DA7000CB700 /* Fonts */ = {
@@ -485,6 +502,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2831890928A51C9800A43419 /* LaunchScreen.storyboard in Resources */,
+				2834B2C228A926BB00C7CB56 /* CastCollectionViewCell.xib in Resources */,
 				2831892F28A51DE800A43419 /* 45732-cinema-animation.json in Resources */,
 				285A3BC028A67DCC000CB700 /* Roboto-Regular.ttf in Resources */,
 				285A3BBE28A67DCC000CB700 /* Roboto-Light.ttf in Resources */,
@@ -623,6 +641,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2831893C28A525BD00A43419 /* PopularMoviesModel.swift in Sources */,
+				2834B2C128A926BB00C7CB56 /* CastCollectionViewCell.swift in Sources */,
 				285A3BCC28A69AB2000CB700 /* MovieDetailScreen.swift in Sources */,
 				283188FD28A51C9600A43419 /* AppDelegate.swift in Sources */,
 				2831895228A59C7600A43419 /* BaseViewModel.swift in Sources */,
@@ -646,6 +665,7 @@
 				285A3BC328A68000000CB700 /* UIColor+.swift in Sources */,
 				2831895628A5AB4400A43419 /* MainScreenViewController.swift in Sources */,
 				285A3BCE28A69ABE000CB700 /* MovieDetailViewModel.swift in Sources */,
+				2834B2C428A944E900C7CB56 /* String+.swift in Sources */,
 				285A3BB428A67C22000CB700 /* UITextField+.swift in Sources */,
 				2831894C28A52A5C00A43419 /* SafeUnwrap.swift in Sources */,
 				2831893E28A5277200A43419 /* MovieDetailModel.swift in Sources */,

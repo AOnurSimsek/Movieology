@@ -60,11 +60,12 @@ final class WebService {
             errorHandler(.urlError)
             return
         }
-
+        print(url)
         AF.request(url, method: .get).responseDecodable(of: S.self) { response in
             if let error = response.error {
-                print("🛑 error occured at get request. Error :" + error.localizedDescription)
+                print("🛑 error occured at get request. Error : " + error.localizedDescription)
                 errorHandler(.apiError)
+                return
             } else {
                 if let value = response.value {
                     successHandler(value)

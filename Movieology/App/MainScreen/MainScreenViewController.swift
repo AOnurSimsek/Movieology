@@ -57,7 +57,6 @@ final class MainScreenViewController: BaseViewController<MainScreenViewModel> {
                 self.emptyView.isHidden = false
                 self.tableView.isHidden = true
             } else {
-                print("popular bind a girdim")
                 self.emptyView.isHidden = true
                 self.tableView.isHidden = false
                 self.tableView.reloadData()
@@ -81,8 +80,11 @@ final class MainScreenViewController: BaseViewController<MainScreenViewModel> {
 
 }
 
+//MARK: - UI and Layout
 extension MainScreenViewController {
     private func setUI() {
+        self.navigationController?.navigationBar.isHidden = true
+        
         self.view.backgroundColor = UIColor(hexString: "071037")
         searchTextField.backgroundColor = UIColor(hexString: "2E3656")
         searchTextField.setSearchBar()
@@ -121,7 +123,7 @@ extension MainScreenViewController {
 
 //MARK: - TableView Properties
 extension MainScreenViewController: UITableViewDelegate, UITableViewDataSource {
-    func setTableView() {
+    private func setTableView() {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.backgroundColor = .clear
@@ -149,7 +151,13 @@ extension MainScreenViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
+        if screenState.value == .popularMovies || screenState.value == .nextPage {
+            let nextVC = MovieDetailScreenViewController()
+            nextVC.viewModel.movieID = viewModel.getMovieID(indexPath: indexPath)
+            self.navigationController?.pushViewController(nextVC, animated: true)
+        } else {
+            
+        }
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

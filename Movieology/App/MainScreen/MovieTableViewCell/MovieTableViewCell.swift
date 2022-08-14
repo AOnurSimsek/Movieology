@@ -34,7 +34,9 @@ class MovieTableViewCell: UITableViewCell {
     func setCell(image: URL?,
                  title: String,
                  description: String) {
-        movieImageView.kf.setImage(with: image)
+        if image != URL(string: "https://image.tmdb.org/t/p/w500") {
+            movieImageView.kf.setImage(with: image)
+        }
         movieDescriptionLabel.text = "\t" + description
         titleLabel.text = title
     }
