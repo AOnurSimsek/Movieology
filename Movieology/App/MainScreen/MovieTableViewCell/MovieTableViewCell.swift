@@ -36,9 +36,24 @@ class MovieTableViewCell: UITableViewCell {
                  description: String) {
         if image != URL(string: "https://image.tmdb.org/t/p/w500") {
             movieImageView.kf.setImage(with: image)
+        } else {
+            movieImageView.image = UIImage(named: "placeholderImage")
         }
         movieDescriptionLabel.text = "\t" + description
         titleLabel.text = title
+    }
+    
+    func createEmptyCell() {
+        movieImageView.image = UIImage(named: "emptyIcon")
+        titleLabel.text = "Oops."
+        movieDescriptionLabel.text = "We searched everywhere but couldn't find anything"
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        movieImageView.image = nil
+        movieDescriptionLabel.text = nil
+        titleLabel.text = nil
     }
     
 }

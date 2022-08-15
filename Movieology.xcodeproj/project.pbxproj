@@ -52,6 +52,8 @@
 		285A3BD728A6A376000CB700 /* ActorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285A3BD528A6A376000CB700 /* ActorTableViewCell.swift */; };
 		285A3BD828A6A376000CB700 /* ActorTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 285A3BD628A6A376000CB700 /* ActorTableViewCell.xib */; };
 		285A3BDB28A71481000CB700 /* TitleHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285A3BDA28A71481000CB700 /* TitleHeaderView.swift */; };
+		286EEAF928A9B5FC002E18C8 /* ActorCastCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 286EEAF728A9B5FC002E18C8 /* ActorCastCollectionViewCell.swift */; };
+		286EEAFA28A9B5FC002E18C8 /* ActorCastCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 286EEAF828A9B5FC002E18C8 /* ActorCastCollectionViewCell.xib */; };
 		785F9700B2AADDC625BB0F2C /* Pods_Movieology_MovieologyUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4865CD9FE0A1B1F5BEE8297B /* Pods_Movieology_MovieologyUITests.framework */; };
 		8EB5298F7BCF451B78C1F2A9 /* Pods_Movieology.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D144C09266981D60556B859 /* Pods_Movieology.framework */; };
 /* End PBXBuildFile section */
@@ -122,6 +124,8 @@
 		285A3BD528A6A376000CB700 /* ActorTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActorTableViewCell.swift; sourceTree = "<group>"; };
 		285A3BD628A6A376000CB700 /* ActorTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ActorTableViewCell.xib; sourceTree = "<group>"; };
 		285A3BDA28A71481000CB700 /* TitleHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleHeaderView.swift; sourceTree = "<group>"; };
+		286EEAF728A9B5FC002E18C8 /* ActorCastCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActorCastCollectionViewCell.swift; sourceTree = "<group>"; };
+		286EEAF828A9B5FC002E18C8 /* ActorCastCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ActorCastCollectionViewCell.xib; sourceTree = "<group>"; };
 		4865CD9FE0A1B1F5BEE8297B /* Pods_Movieology_MovieologyUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Movieology_MovieologyUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B9C7FA1E4E3366151D42BE4 /* Pods-Movieology-MovieologyUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Movieology-MovieologyUITests.release.xcconfig"; path = "Target Support Files/Pods-Movieology-MovieologyUITests/Pods-Movieology-MovieologyUITests.release.xcconfig"; sourceTree = "<group>"; };
 		7C80BD1C35EF2D5A6703B1E4 /* Pods_MovieologyTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MovieologyTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -308,6 +312,7 @@
 			children = (
 				285A3BCF28A69AD7000CB700 /* ActorDetailScreen.swift */,
 				285A3BD128A69AE1000CB700 /* ActorDetailViewModel.swift */,
+				286EEAF128A9A24A002E18C8 /* ActorCastCollectionViewCell */,
 			);
 			path = ActorDetailScreen;
 			sourceTree = "<group>";
@@ -367,6 +372,15 @@
 				285A3BDA28A71481000CB700 /* TitleHeaderView.swift */,
 			);
 			path = TitleHeaderView;
+			sourceTree = "<group>";
+		};
+		286EEAF128A9A24A002E18C8 /* ActorCastCollectionViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				286EEAF728A9B5FC002E18C8 /* ActorCastCollectionViewCell.swift */,
+				286EEAF828A9B5FC002E18C8 /* ActorCastCollectionViewCell.xib */,
+			);
+			path = ActorCastCollectionViewCell;
 			sourceTree = "<group>";
 		};
 		C26FB8E87F53DE5730449430 /* Pods */ = {
@@ -509,6 +523,7 @@
 				285A3BC828A68643000CB700 /* MovieTableViewCell.xib in Resources */,
 				285A3BBF28A67DCC000CB700 /* Roboto-Medium.ttf in Resources */,
 				285A3BD828A6A376000CB700 /* ActorTableViewCell.xib in Resources */,
+				286EEAFA28A9B5FC002E18C8 /* ActorCastCollectionViewCell.xib in Resources */,
 				285A3BBD28A67DCC000CB700 /* Roboto-Bold.ttf in Resources */,
 				2831890628A51C9800A43419 /* Assets.xcassets in Resources */,
 				285A3BBC28A67DCC000CB700 /* Roboto-Black.ttf in Resources */,
@@ -648,6 +663,7 @@
 				285A3BB228A6644E000CB700 /* Observable.swift in Sources */,
 				2831894228A5284F00A43419 /* SearchModel.swift in Sources */,
 				285A3BD028A69AD7000CB700 /* ActorDetailScreen.swift in Sources */,
+				286EEAF928A9B5FC002E18C8 /* ActorCastCollectionViewCell.swift in Sources */,
 				285A3BDB28A71481000CB700 /* TitleHeaderView.swift in Sources */,
 				2831895428A59C8000A43419 /* BaseViewController.swift in Sources */,
 				2831893928A523A700A43419 /* Enums.swift in Sources */,

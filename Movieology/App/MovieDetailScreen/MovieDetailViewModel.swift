@@ -123,7 +123,9 @@ class MovieDetailViewModel: BaseViewModel {
                     genres += ", " +  genre.name~
                 }
             }
-            genres.removeFirst()
+            if !genres.isEmpty {
+                genres.removeFirst()
+            }
             return genres.getTitleAttributedString(text: genres, hightlightedText: "Genres: ")
         case .overview:
             guard let overview = model.overview
@@ -181,6 +183,14 @@ class MovieDetailViewModel: BaseViewModel {
                 urlString = "https://www.imdb.com/"
             }
             return URL(string: urlString)
+        }
+    }
+    
+    func getActorID(index: Int) -> Int {
+        if let id = movieCredits.value?.cast?[index].id {
+            return id
+        } else {
+            return 0
         }
     }
     

@@ -18,7 +18,6 @@ final class MainScreenViewController: BaseViewController<MainScreenViewModel> {
 
     private lazy var searchTextField: UITextField = UITextField()
     private lazy var titleLabel: UILabel = UILabel()
-    private lazy var emptyView: UIView = UIView()
     private lazy var tableView: UITableView = UITableView()
 
     private var screenState: Observable<MainScreenState> = Observable(.popularMovies)
@@ -38,12 +37,10 @@ final class MainScreenViewController: BaseViewController<MainScreenViewModel> {
             self.showLoading()
             switch stateValue {
             case .popularMovies:
-                self.titleLabel.text = "Popular Movies"
                 self.viewModel.getPopularMovies()
             case .nextPage:
                 self.viewModel.getPopularMovies(isNextPage: true)
             case .search:
-                self.titleLabel.text = "Search Results"
                 self.viewModel.search(text: self.searchTextField.text ?? "")
             }
         }
@@ -51,17 +48,9 @@ final class MainScreenViewController: BaseViewController<MainScreenViewModel> {
         viewModel.popularMovies.bind { [weak self] _ in
             guard let self = self
             else { return }
+            self.titleLabel.text = "Popular Movies"
+            self.tableView.reloadData()
             self.removeLoading()
-
-            if self.viewModel.popularMovies.value.isEmpty {
-                self.emptyView.isHidden = false
-                self.tableView.isHidden = true
-            } else {
-                self.emptyView.isHidden = true
-                self.tableView.isHidden = false
-                self.tableView.reloadData()
-            }
-
         }
 
         viewModel.error.bind { [weak self] _error in
@@ -72,8 +61,9 @@ final class MainScreenViewController: BaseViewController<MainScreenViewModel> {
         }
 
         viewModel.searchResults.bind { [weak self] _ in
-            self?.removeLoading()
+            self?.titleLabel.text = "Search Results"
             self?.tableView.reloadData()
+            self?.removeLoading()
         }
 
     }
@@ -89,6 +79,8 @@ extension MainScreenViewController {
         searchTextField.backgroundColor = UIColor(hexString: "2E3656")
         searchTextField.setSearchBar()
         searchTextField.delegate = self
+        searchTextField.font = UIFont(name: "Roboto-Regular", size: 14)
+        searchTextField.textColor = .white
 
         titleLabel.font = UIFont(name: "Roboto-Medium", size: 22)
         titleLabel.textColor = .white
@@ -152,11 +144,25 @@ extension MainScreenViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if screenState.value == .popularMovies || screenState.value == .nextPage {
-            let nextVC = MovieDetailScreenViewController()
-            nextVC.viewModel.movieID = viewModel.getMovieID(indexPath: indexPath)
-            self.navigationController?.pushViewController(nextVC, animated: true)
+            if let movieID = viewModel.getMovieID(indexPath: indexPath) {
+                let nextVC = MovieDetailScreenViewController()
+                nextVC.viewModel.movieID = movieID
+                self.navigationController?.pushViewController(nextVC, animated: true)
+            }
         } else {
-            
+            if indexPath.section == 0 {
+                if let movieID = viewModel.getMovieID(indexPath: indexPath) {
+                    let nextVC = MovieDetailScreenViewController()
+                    nextVC.viewModel.movieID = movieID
+                    self.navigationController?.pushViewController(nextVC, animated: true)
+                }
+            } else {
+                if let actorID = viewModel.getTypeID(indexPath: indexPath) {
+                    let nextVC = ActorDetailScreenViewController()
+                    nextVC.viewModel.actorID = actorID
+                    self.navigationController?.pushViewController(nextVC, animated: true)
+                }
+            }
         }
     }
 

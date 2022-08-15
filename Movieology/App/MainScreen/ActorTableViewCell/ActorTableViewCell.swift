@@ -32,8 +32,21 @@ class ActorTableViewCell: UITableViewCell {
                  fullName: String) {
         if image != URL(string: "https://image.tmdb.org/t/p/w500") {
             actorImageView.kf.setImage(with: image)
+        } else {
+            actorImageView.image = UIImage(named: "placeholderImage")
         }
         actorNameLabel.text = fullName
+    }
+    
+    func createEmptyCell() {
+        actorImageView.image = UIImage(named: "emptyIcon")
+        actorNameLabel.text = "We couldn't find a movie fan with the name you searched for"
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        actorImageView.image = nil
+        actorNameLabel.text = nil
     }
 
 }

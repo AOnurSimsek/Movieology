@@ -32,14 +32,17 @@ class MainScreenViewModel: BaseViewModel {
     }
 
     func search(text: String) {
+        let searchText = text.replacingOccurrences(of: " ", with: "%20")
+        
         WebService.shared.request(type: .search,
-                                  searchText: text,
+                                  searchText: searchText,
                                   successHandler: handleSearch(_:),
                                   errorHandler: handleError(_:))
     }
 
     private func handlePopularMovies(_ response: PopularMoviesModel) {
         if currentPage == 1 {
+            popularMovies.value = []
             popularMovies.value = response.results ?? []
             self.maxPage = response.totalPages ?? -1
         } else {
@@ -52,15 +55,13 @@ class MainScreenViewModel: BaseViewModel {
     }
 
     private func handleSearch(_ response: SearchModel) {
-        var searchResultArray: [[SearchResult]] = [[],[],[]]
+        var searchResultArray: [[SearchResult]] = [[],[]]
         if let result = response.results {
             for item in result {
-                if item.mediaType == "tv"{
+                if item.mediaType == "movie"{
                     searchResultArray[0].append(item)
-                } else if item.mediaType == "movie" {
-                    searchResultArray[1].append(item)
                 } else if item.mediaType == "person" {
-                    searchResultArray[2].append(item)
+                    searchResultArray[1].append(item)
                 }
             }
         }
@@ -74,11 +75,23 @@ class MainScreenViewModel: BaseViewModel {
     func getRowCount(screenState: MainScreenState, section: Int) -> Int {
         switch screenState {
         case .popularMovies:
-            return popularMovies.value.count
+            if popularMovies.value.isEmpty {
+                return 1
+            } else {
+                return popularMovies.value.count
+            }
         case .nextPage:
-            return popularMovies.value.count
+            if popularMovies.value.isEmpty {
+                return 1
+            } else {
+                return popularMovies.value.count
+            }
         case .search:
-            return searchResults.value[section].count
+            if searchResults.value[section].isEmpty {
+                return 1
+            } else {
+                return searchResults.value[section].count
+            }
         }
     }
 
@@ -98,32 +111,49 @@ class MainScreenViewModel: BaseViewModel {
         case .popularMovies:
             let cell = tableView.dequeueReusableCell(withIdentifier: MovieTableViewCell.identifier,
                                                      for: indexPath) as! MovieTableViewCell
-            cell.setCell(image: URL(string: "https://image.tmdb.org/t/p/w500" + (popularMovies.value[indexPath.row].posterPath ?? "")),
-                         title: popularMovies.value[indexPath.row].originalTitle ?? "",
-                         description: popularMovies.value[indexPath.row].overview ?? "")
+            if popularMovies.value.isEmpty {
+                cell.createEmptyCell()
+            } else {
+                cell.setCell(image: URL(string: "https://image.tmdb.org/t/p/w500" + (popularMovies.value[indexPath.row].posterPath ?? "")),
+                             title: popularMovies.value[indexPath.row].originalTitle ?? "",
+                             description: popularMovies.value[indexPath.row].overview ?? "")
+            }
             cell.selectionStyle = .none
             return cell
         case .nextPage:
             let cell = tableView.dequeueReusableCell(withIdentifier: MovieTableViewCell.identifier,
                                                      for: indexPath) as! MovieTableViewCell
-            cell.setCell(image: URL(string: "https://image.tmdb.org/t/p/w500" + (popularMovies.value[indexPath.row].posterPath ?? "")),
-                         title: popularMovies.value[indexPath.row].originalTitle ?? "",
-                         description: popularMovies.value[indexPath.row].overview ?? "Description not found")
+            if popularMovies.value.isEmpty {
+                cell.createEmptyCell()
+            } else {
+                cell.setCell(image: URL(string: "https://image.tmdb.org/t/p/w500" + (popularMovies.value[indexPath.row].posterPath ?? "")),
+                             title: popularMovies.value[indexPath.row].originalTitle ?? "",
+                             description: popularMovies.value[indexPath.row].overview ?? "Description not found")
+            }
             cell.selectionStyle = .none
             return cell
         case .search:
-            if indexPath.section == 0 || indexPath.section == 1 {
+            if indexPath.section == 0 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: MovieTableViewCell.identifier,
                                                          for: indexPath) as! MovieTableViewCell
-                cell.setCell(image: URL(string: "https://image.tmdb.org/t/p/w500" + (searchResults.value[indexPath.section][indexPath.row].posterPath ?? "")),
-                             title: searchResults.value[indexPath.section][indexPath.row].name ?? searchResults.value[indexPath.section][indexPath.row].title ?? "",
-                             description: searchResults.value[indexPath.section][indexPath.row].overview ?? "")
+                if searchResults.value[indexPath.section].isEmpty {
+                    cell.createEmptyCell()
+                } else {
+                    cell.setCell(image: URL(string: "https://image.tmdb.org/t/p/w500" + (searchResults.value[indexPath.section][indexPath.row].posterPath ?? "")),
+                                 title: searchResults.value[indexPath.section][indexPath.row].name ?? searchResults.value[indexPath.section][indexPath.row].title ?? "",
+                                 description: searchResults.value[indexPath.section][indexPath.row].overview ?? "")
+                }
+                cell.selectionStyle = .none
                 return cell
             } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: ActorTableViewCell.identifier,
                                                          for: indexPath) as! ActorTableViewCell
-                cell.setCell(image: URL(string: "https://image.tmdb.org/t/p/w500" + (searchResults.value[indexPath.section][indexPath.row].profilePath ?? "")),
-                             fullName: searchResults.value[indexPath.section][indexPath.row].name ?? "")
+                if searchResults.value[indexPath.section].isEmpty {
+                    cell.createEmptyCell()
+                } else {
+                    cell.setCell(image: URL(string: "https://image.tmdb.org/t/p/w500" + (searchResults.value[indexPath.section][indexPath.row].profilePath ?? "")),
+                                 fullName: searchResults.value[indexPath.section][indexPath.row].name ?? "")
+                }
                 cell.selectionStyle = .none
                 return cell
             }
@@ -132,8 +162,6 @@ class MainScreenViewModel: BaseViewModel {
 
     func getSectionHeader(section: Int) -> TitleHeaderView {
         if section == 0 {
-            return TitleHeaderView(title: "Tv-Series")
-        } else if section == 1 {
             return TitleHeaderView(title: "Movie")
         } else {
             return TitleHeaderView(title: "Actor, Actress etc.")
@@ -141,7 +169,19 @@ class MainScreenViewModel: BaseViewModel {
     }
     
     func getMovieID(indexPath: IndexPath) -> Int? {
-        return popularMovies.value[indexPath.row].id
+        if popularMovies.value.isEmpty {
+            return nil
+        } else {
+            return popularMovies.value[indexPath.row].id
+        }
+    }
+    
+    func getTypeID(indexPath: IndexPath) -> Int? {
+        if searchResults.value[indexPath.section].isEmpty {
+            return nil
+        } else {
+            return searchResults.value[indexPath.section][indexPath.row].id
+        }
     }
     
 }

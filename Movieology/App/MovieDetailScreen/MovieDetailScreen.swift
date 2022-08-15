@@ -47,7 +47,7 @@ final class MovieDetailScreenViewController: BaseViewController<MovieDetailViewM
         
     }
     
-    func bind() {
+    private func bind() {
         viewModel.movieDetails.bind { [weak self] _ in
             guard let self = self
             else { return }
@@ -81,8 +81,15 @@ final class MovieDetailScreenViewController: BaseViewController<MovieDetailViewM
         }
         
     }
+
+    private func openWeb(type: DetailUrlTypes) {
+        guard let url = viewModel.getURL(type: type)
+        else { return }
+        let viewController = SFSafariViewController(url: url)
+        self.present(viewController, animated: true)
+    }
     
-    func addTargets() {
+    private func addTargets() {
         backButton.addTarget(self, action: #selector(backtoPreviousVC), for: .touchUpInside)
         homeButton.addTarget(self, action: #selector(backtoHomeVC), for: .touchUpInside)
         webSiteButton.addTarget(self, action: #selector(gotoWebsite), for: .touchUpInside)
@@ -108,13 +115,6 @@ final class MovieDetailScreenViewController: BaseViewController<MovieDetailViewM
     
     @objc func gotoImdb() {
         openWeb(type: .imdb)
-    }
-    
-    func openWeb(type: DetailUrlTypes) {
-        guard let url = viewModel.getURL(type: type)
-        else { return }
-        let viewController = SFSafariViewController(url: url)
-        self.present(viewController, animated: true)
     }
     
 }
@@ -188,15 +188,14 @@ extension MovieDetailScreenViewController {
     private func setLayout() {
         self.view.addSubview(scrollView)
         scrollView.snp.makeConstraints { make in
-            make.top.equalTo(self.view.snp.top)
-            make.left.right.bottom.equalTo(self.view)
+            make.edges.equalTo(view)
         }
         
         scrollView.addSubview(mainView)
         mainView.snp.makeConstraints { make in
-            make.top.equalTo(self.scrollView.snp.top)
-            make.right.left.bottom.equalTo(self.scrollView)
-            make.width.height.equalTo(self.scrollView)
+            make.top.bottom.equalTo(self.scrollView)
+            make.left.right.equalTo(view)
+            make.height.greaterThanOrEqualTo(self.view.snp.height)
         }
         
         mainView.addSubview(backButton)
@@ -217,7 +216,7 @@ extension MovieDetailScreenViewController {
         
         mainView.addSubview(backdropImageView)
         backdropImageView.snp.makeConstraints { make in
-            make.top.equalTo(self.mainView.snp.top)
+            make.top.equalTo(self.mainView)
             make.leading.trailing.equalTo(self.mainView)
             let screenWith = UIScreen.main.bounds.width
             make.height.equalTo(screenWith/1.7793)
@@ -311,12 +310,14 @@ extension MovieDetailScreenViewController {
             make.top.equalTo(self.castTitleLabel.snp.bottom).offset(8)
             make.leading.trailing.equalTo(self.mainView)
             make.height.equalTo(200)
+            make.bottom.greaterThanOrEqualTo(self.mainView.snp.bottom).offset(-15)
         }
-
+        
     }
     
 }
 
+//MARK: - CollectionView Properties
 extension MovieDetailScreenViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     private func setCollectionView() {
         collectionView.delegate = self
@@ -355,6 +356,9 @@ extension MovieDetailScreenViewController: UICollectionViewDataSource, UICollect
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        let id = viewModel.getActorID(index: indexPath.row)
+        let nextVC = ActorDetailScreenViewController()
+        nextVC.viewModel.actorID = id
+        self.navigationController?.pushViewController(nextVC, animated: true)
     }
 }
