@@ -5,9 +5,6 @@
 //  Created by Abdullah onur Şimşek on 11.08.2022.
 //
 
-import Foundation
-
-import Foundation
 import UIKit
 
 postfix operator ~

@@ -5,7 +5,6 @@
 //  Created by Abdullah onur Şimşek on 12.08.2022.
 //
 
-import Foundation
 import UIKit
 
 class MainScreenViewModel: BaseViewModel {
